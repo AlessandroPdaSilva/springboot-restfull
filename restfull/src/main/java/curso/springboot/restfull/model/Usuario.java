@@ -1,12 +1,17 @@
 package curso.springboot.restfull.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class Usuario implements Serializable{
@@ -20,6 +25,10 @@ public class Usuario implements Serializable{
 	private String login;
 	private String senha;
 	private String nome;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuario", fetch = FetchType.LAZY)
+	List<Telefone> listaTelefone;
+	
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +52,12 @@ public class Usuario implements Serializable{
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public List<Telefone> getListaTelefone() {
+		return listaTelefone;
+	}
+	public void setListaTelefone(List<Telefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
 	}
 	@Override
 	public int hashCode() {
