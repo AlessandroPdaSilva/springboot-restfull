@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import curso.springboot.restfull.ApplicationContextLoad;
 import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.repository.UsuarioRepository;
 import io.jsonwebtoken.Jwts;
@@ -84,9 +85,9 @@ public class JWTTokenAutenticacaoService {
 			
 			if (username != null) {
 				
-				Usuario usuario = usuarioRepository.findUsuarioByLogin(username);
+				//Usuario usuario = usuarioRepository.findUsuarioByLogin(username);
 				
-				//Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class).findUserByLogin(user);
+				Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class).findUsuarioByLogin(username);
 				
 				if (usuario != null) {
 					 
