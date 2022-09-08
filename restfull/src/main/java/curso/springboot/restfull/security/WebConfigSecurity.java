@@ -1,4 +1,4 @@
-package curso.springboot.security;
+package curso.springboot.restfull.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

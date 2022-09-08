@@ -1,4 +1,4 @@
-package curso.springboot.security;
+package curso.springboot.restfull.security;
 
 import javax.transaction.Transactional;
 

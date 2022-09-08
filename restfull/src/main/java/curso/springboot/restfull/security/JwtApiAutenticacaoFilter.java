@@ -1,5 +1,4 @@
-package curso.springboot.security;
-
+package curso.springboot.restfull.security;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
