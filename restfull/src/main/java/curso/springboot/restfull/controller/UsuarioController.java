@@ -68,13 +68,21 @@ public class UsuarioController {
     @PutMapping(value = "")
     public ResponseEntity<?> editarUsuario(@RequestBody Usuario usuario){
     	
+    	
     	if(usuario.getId() == null) {
     		return new ResponseEntity<String>("Id do usuario não informado", HttpStatus.OK);
     	}
     	
-    	//Criptografar senha
-		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
-		usuario.setSenha(senhaCriptografada);
+		// se usuario atualizar senha
+    	Usuario uAux = usuarioRepository.findUsuarioByLogin(usuario.getLogin());
+    	if(!uAux.getSenha().equals(usuario.getSenha())) {
+    		
+    		//Criptografar senha
+    		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+    		usuario.setSenha(senhaCriptografada);
+    		
+    	}
+    	
     	
     	usuario = usuarioRepository.save(usuario);
     	
