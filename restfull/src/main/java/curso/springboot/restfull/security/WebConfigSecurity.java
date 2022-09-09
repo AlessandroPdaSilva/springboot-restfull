@@ -38,6 +38,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		.antMatchers("/index").permitAll()
 		
 		//.antMatchers(HttpMethod.GET, "/usuario").hasAnyRole("ADMIN")
+		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		
 		// Redireciona apos ser deslogado
 		.anyRequest().authenticated().and().logout().logoutSuccessUrl("/index") 
