@@ -91,11 +91,12 @@ public class JWTTokenAutenticacaoService {
 				
 				if (usuario != null) {
 					 
-					return new UsernamePasswordAuthenticationToken(
-							usuario.getLogin(), 
-							usuario.getSenha(),
-							usuario.getAuthorities());
-				   
+					if(tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
+						return new UsernamePasswordAuthenticationToken(
+								usuario.getLogin(), 
+								usuario.getSenha(),
+								usuario.getAuthorities());
+					}
 					
 				}
 			}

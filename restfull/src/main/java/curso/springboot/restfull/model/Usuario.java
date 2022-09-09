@@ -52,9 +52,17 @@ public class Usuario implements UserDetails{
 										table = "role"))// "JoinTable cria tabela no banco"
 	private List<Role> roles;
 	
+	String token = "";
 	
 	
 	// GET E SET
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public List<Role> getRoles() {
 		return roles;
 	}
