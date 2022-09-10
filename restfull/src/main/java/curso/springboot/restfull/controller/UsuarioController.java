@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.springboot.restfull.model.Usuario;
+import curso.springboot.restfull.model.UsuarioDto;
 import curso.springboot.restfull.repository.UsuarioRepository;
 
 @RestController
@@ -52,7 +53,10 @@ public class UsuarioController {
 		
 		Usuario u = usuarioRepository.findById(id).get();
 		
-		return new ResponseEntity<Usuario>(u,HttpStatus.OK);
+		// usando DTO
+    	UsuarioDto usuDto = new UsuarioDto(u);
+		
+		return new ResponseEntity<UsuarioDto>(usuDto,HttpStatus.OK);
 	}
 	
 	// SALVAR USUARIO
@@ -66,7 +70,10 @@ public class UsuarioController {
 		
     	usuario = usuarioRepository.save(usuario);
     	
-    	return new ResponseEntity<Usuario>(usuario, HttpStatus.CREATED);
+    	// usando DTO
+    	UsuarioDto usuDto = new UsuarioDto(usuario);
+    	
+    	return new ResponseEntity<UsuarioDto>(usuDto, HttpStatus.CREATED);
     }
 	
     // EDITAR USUARIO
@@ -91,7 +98,10 @@ public class UsuarioController {
     	
     	usuario = usuarioRepository.save(usuario);
     	
-    	return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+    	// usando DTO
+    	UsuarioDto usuDto = new UsuarioDto(usuario);
+    	
+    	return new ResponseEntity<UsuarioDto>(usuDto, HttpStatus.OK);
     }
     
     // DELETAR USUARIO
