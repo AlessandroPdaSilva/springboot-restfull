@@ -114,6 +114,33 @@ public class UsuarioController {
  	}
     
     
+ 	
+ 	/***
+ 	 COMO CONSUMIR API EXTERNA PELO JAVA
+ 	 
+	 	 URL url = new URL("https://viacep.com.br/ws/"+ usuario.getCep() + "/json/");
+	 	 URLConnection connection = url.openConnection();
+	 	 InputStream is = connection.getInputStream;
+	 	 BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+	 	 
+	 	 String cep = "";
+	 	 StringBuilder jsonCep =new StringBuilder();
+	 	 
+	 	 While((cep = br.readLine) != null){
+	 	 	jsonCep.append(cep);
+	 	 }
+	 	 
+	 	 System.out.println(jsonCep.toString());
+	 	 
+	 	 Usuario uAux = new Gson().fromJson(jsonCep.toString(), Usuario.class);
+	 	 
+	 	 usuario.setCep(uAux.getCep());
+	 	 usuario.setLogradouro(uAux.getLogradouro());
+	 	 usuario.setBairro(uAux.getBairro());
+	 	 ...
+	 	 
+ 	 
+ 	 */
     
     
 }
