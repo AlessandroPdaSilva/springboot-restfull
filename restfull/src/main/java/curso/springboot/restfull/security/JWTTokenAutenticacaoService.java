@@ -57,6 +57,9 @@ public class JWTTokenAutenticacaoService {
 		// libera cross origem
 		liberacaoCors(response);
 		
+		// atualizando token no banco
+		ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class).atualizaToken(JWT, username);
+		
 		//Adiciona no cabeçalho http
 		response.addHeader(HEADER_STRING, token); //(Authorization: Bearer 87878we8we787w8e78w78e78w7e87w)
 		
