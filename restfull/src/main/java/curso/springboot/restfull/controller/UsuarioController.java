@@ -1,5 +1,6 @@
 package curso.springboot.restfull.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -58,6 +59,25 @@ public class UsuarioController {
 		
 		return new ResponseEntity<UsuarioDto>(usuDto,HttpStatus.OK);
 	}
+	
+	
+	// CONSULTAR USUARIO BY NOME
+	@GetMapping(value = "/consultaByNome/{nome}")
+	public ResponseEntity consultarUsuarioByNome(@PathVariable(value = "nome") String nome){
+		
+		List<Usuario> listaUsuario = usuarioRepository.findUsuarioByNome(nome);
+		
+		// usando DTO
+		List<UsuarioDto> listaUsuarioDto = new ArrayList<>();
+		
+		for(Usuario aux: listaUsuario) {
+			listaUsuarioDto.add(new UsuarioDto(aux));
+		}
+		
+		
+		return new ResponseEntity<List<UsuarioDto>>(listaUsuarioDto,HttpStatus.OK);
+	}
+	
 	
 	// SALVAR USUARIO
     @PostMapping(value = "")
