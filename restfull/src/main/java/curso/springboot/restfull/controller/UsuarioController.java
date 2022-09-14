@@ -27,6 +27,7 @@ import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.model.UsuarioDto;
 import curso.springboot.restfull.repository.UsuarioRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/usuario")
 public class UsuarioController {
@@ -35,7 +36,6 @@ public class UsuarioController {
 	private UsuarioRepository usuarioRepository;
 
 	// LISTAR USUARIOS
-	@CrossOrigin(origins = "*")
 	@GetMapping(value = "")
 	@CacheEvict(value = "cachelistausurio", allEntries = true)// limpa cache nao usado
 	@CachePut("cachelistausurio")// atualiza lista de cache
@@ -60,7 +60,6 @@ public class UsuarioController {
 	}
 	
 	// SALVAR USUARIO
-	@CrossOrigin(origins = "localhost:8080")
     @PostMapping(value = "")
     public ResponseEntity<?> salvarUsuario(@RequestBody Usuario usuario){
     	
