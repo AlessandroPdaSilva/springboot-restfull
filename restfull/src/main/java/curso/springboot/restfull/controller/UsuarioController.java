@@ -105,13 +105,15 @@ public class UsuarioController {
     	}
     	
 		// se usuario atualizar senha
-    	Usuario uAux = usuarioRepository.findUsuarioByLogin(usuario.getLogin());
-    	if(!uAux.getSenha().equals(usuario.getSenha())) {
+    	Usuario uAux = usuarioRepository.findById(usuario.getId()).get();
+    	if(usuario.getSenha() != null) {
     		
     		//Criptografar senha
     		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
     		usuario.setSenha(senhaCriptografada);
     		
+    	}else {
+    		usuario.setSenha(uAux.getSenha());
     	}
     	
     	

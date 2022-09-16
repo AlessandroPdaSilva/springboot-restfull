@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -41,14 +42,14 @@ public class Usuario implements UserDetails{
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "usuario", fetch = FetchType.LAZY)
 	List<Telefone> listaTelefone;
 	
-	@OneToMany(fetch = FetchType.EAGER)	
+	@ManyToMany(fetch = FetchType.EAGER)	
 	@JoinTable(name = "usuarios_role", // Nome da tabela
     	joinColumns = @JoinColumn(name = "usuario_id", // nome da coluna
                   					referencedColumnName = "id",// foreinkey
                   					table = "usuario"),
 		
 		inverseJoinColumns = @JoinColumn(name="role_id", // nome da coluna
-										referencedColumnName = "id",// foreinkey
+										referencedColumnName = "id",unique = false,// foreinkey
 										table = "role"))// "JoinTable cria tabela no banco"
 	private List<Role> roles;
 	
