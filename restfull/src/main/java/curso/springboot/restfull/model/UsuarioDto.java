@@ -1,15 +1,20 @@
 package curso.springboot.restfull.model;
 
+import java.util.List;
+
 public class UsuarioDto {
 
 	private Long id;
 	private String login;
 	private String nome;
 	
+	List<Telefone> listaTelefone;
+	
 	public UsuarioDto(Usuario usuario) {
 		this.id = usuario.getId();
 		this.login = usuario.getLogin();
 		this.nome = usuario.getNome();
+		this.listaTelefone = usuario.getListaTelefone();
 	}
 	
 	// GET E SET
@@ -31,6 +36,13 @@ public class UsuarioDto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public List<Telefone> getListaTelefone() {
+		return listaTelefone;
+	}
+	public void setListaTelefone(List<Telefone> listaTelefone) {
+		this.listaTelefone = listaTelefone;
+	}
+	
 	
 	
 	

@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.model.UsuarioDto;
+import curso.springboot.restfull.repository.TelefoneRepository;
 import curso.springboot.restfull.repository.UsuarioRepository;
 
 @CrossOrigin(origins = "*")
@@ -35,6 +37,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 
 	// LISTAR USUARIOS
 	@GetMapping(value = "")
@@ -135,6 +140,19 @@ public class UsuarioController {
  	}
     
     
+ 	// DELETAR TELEFONE
+ 	@DeleteMapping(value = "/telefone/{idtelefone}")
+	public ResponseEntity<?> excluirTelefone(@PathVariable("idtelefone") Long idTelefone){
+		
+		// deletar telefone
+		telefoneRepository.deleteById(idTelefone);
+		 
+		return new ResponseEntity<String>("ok",HttpStatus.OK);
+	}
+ 	
+ 	
+ 	
+ 	
  	
  	/***
  	 COMO CONSUMIR API EXTERNA PELO JAVA
