@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import curso.springboot.restfull.model.Telefone;
 import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.model.UsuarioDto;
 import curso.springboot.restfull.repository.TelefoneRepository;
@@ -92,7 +93,19 @@ public class UsuarioController {
 		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(senhaCriptografada);
 		
+		
+		List<Telefone> telAux = usuario.getListaTelefone();
+		
+		// Salvando Usuario
     	usuario = usuarioRepository.save(usuario);
+		
+		// Adicionando Telefone
+    	for(Telefone fone: telAux) {
+    		fone.setUsuario(usuario);
+    	}
+    	telefoneRepository.saveAll(usuario.getListaTelefone());
+    	
+    	
     	
     	// usando DTO
     	UsuarioDto usuDto = new UsuarioDto(usuario);
@@ -122,7 +135,15 @@ public class UsuarioController {
     	}
     	
     	
+    	// Adicionando Telefone
+    	for(Telefone fone: usuario.getListaTelefone()) {
+    		fone.setUsuario(usuario);
+    	}
+    	telefoneRepository.saveAll(usuario.getListaTelefone());
+    	
+    	// Salvando Usuario
     	usuario = usuarioRepository.save(usuario);
+    	
     	
     	// usando DTO
     	UsuarioDto usuDto = new UsuarioDto(usuario);
