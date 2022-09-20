@@ -89,23 +89,36 @@ public class UsuarioController {
     @PostMapping(value = "")
     public ResponseEntity<?> salvarUsuario(@RequestBody Usuario usuario){
     	
-		//Criptografar senha
-		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
-		usuario.setSenha(senhaCriptografada);
+    	// se usuario atualizar senha
+    	if(usuario.getSenha() != null) {
+    		
+    		//Criptografar senha
+    		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+    		usuario.setSenha(senhaCriptografada);
+    		
+    	}else {
+    		usuario.setSenha("");
+    	}
 		
-		
+    	
+    		
+    	
+    	
 		List<Telefone> telAux = usuario.getListaTelefone();
 		
 		// Salvando Usuario
     	usuario = usuarioRepository.save(usuario);
 		
-		// Adicionando Telefone
-    	for(Telefone fone: telAux) {
-    		fone.setUsuario(usuario);
+    	
+    	if(usuario.getListaTelefone() != null) {
+			
+    		// Adicionando Telefone
+	    	for(Telefone fone: telAux) {
+	    		fone.setUsuario(usuario);
+	    	}
+	    	telefoneRepository.saveAll(usuario.getListaTelefone());
+    	
     	}
-    	telefoneRepository.saveAll(usuario.getListaTelefone());
-    	
-    	
     	
     	// usando DTO
     	UsuarioDto usuDto = new UsuarioDto(usuario);
