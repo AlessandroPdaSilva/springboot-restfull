@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,10 +51,28 @@ public class UsuarioController {
 	@CachePut("cachelistausurio")// atualiza lista de cache
 	public ResponseEntity listarUsuario(){
 		
-		List<Usuario> listaUsuario = (List<Usuario>) usuarioRepository.findAll();
+		PageRequest page = PageRequest.of(0, 5, Sort.by("nome"));
 		
-		return new ResponseEntity<List<Usuario>>(listaUsuario,HttpStatus.OK);
+		Page<Usuario> listaUsuario = usuarioRepository.findAll(page);
+		
+		return new ResponseEntity<Page<Usuario>>(listaUsuario,HttpStatus.OK);
 	}
+	
+	
+	
+	// LISTAR USUARIOS PAGINACAO
+	@GetMapping(value = "page/{pagina}")
+	@CacheEvict(value = "cachelistausurio", allEntries = true)// limpa cache nao usado
+	@CachePut("cachelistausurio")// atualiza lista de cache
+	public ResponseEntity listarUsuarioPaginacao(@PathVariable(value = "pagina") int pagina){
+		
+		PageRequest page = PageRequest.of(pagina, 5, Sort.by("nome"));
+		
+		Page<Usuario> listaUsuario = usuarioRepository.findAll(page);
+		
+		return new ResponseEntity<Page<Usuario>>(listaUsuario,HttpStatus.OK);
+	}
+		
 	
 	
 	// CONSULTAR USUARIO
