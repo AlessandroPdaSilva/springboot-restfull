@@ -5,6 +5,10 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +30,25 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	@Transactional
 	@Query(nativeQuery = true, value = "UPDATE usuario SET token = ?1 WHERE login = ?2")
 	public void atualizaToken(String login,String token);
+
+	// paginacao para consulta de nome
+	default Page<Usuario> findUserByNamePage(String nome, PageRequest pageRequest) {
+		
+		Usuario usuario = new Usuario();
+		usuario.setNome(nome);
+		
+		/*Configurando para pesquisar por nome e paginação*/
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
+				.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers
+						.contains().ignoreCase());
+		
+		Example<Usuario> example = Example.of(usuario, exampleMatcher);
+		
+		Page<Usuario> retorno = findAll(example, pageRequest);
+		
+		return retorno;
+		
+	}
 
 	
 	
