@@ -1,5 +1,6 @@
 package curso.springboot.restfull.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class UsuarioDto {
@@ -9,15 +10,25 @@ public class UsuarioDto {
 	private String nome;
 	
 	List<Telefone> listaTelefone;
+	private Date dataNascimento;
 	
+	//CONSTRUTOR
 	public UsuarioDto(Usuario usuario) {
 		this.id = usuario.getId();
 		this.login = usuario.getLogin();
 		this.nome = usuario.getNome();
 		this.listaTelefone = usuario.getListaTelefone();
+		this.dataNascimento = usuario.getDataNascimento();
 	}
 	
 	// GET E SET
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 	public Long getId() {
 		return id;
 	}
