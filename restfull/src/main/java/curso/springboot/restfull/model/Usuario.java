@@ -61,7 +61,7 @@ public class Usuario implements UserDetails{
 	
 	String token = "";
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",shape = JsonFormat.Shape.STRING,locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(iso=ISO.DATE, pattern="dd/MM/yyyy")
 	private Date dataNascimento;
