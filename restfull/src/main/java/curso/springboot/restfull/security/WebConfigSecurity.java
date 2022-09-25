@@ -35,7 +35,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter{
 		
 		// Qualquer usuário acessa a pagina inicial
 		.disable().authorizeRequests().antMatchers("/").permitAll()
-		.antMatchers("/index").permitAll()
+		.antMatchers("/index", "/recuperaconta/**").permitAll()
 		
 		//.antMatchers(HttpMethod.GET, "/usuario").hasAnyRole("ADMIN")
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

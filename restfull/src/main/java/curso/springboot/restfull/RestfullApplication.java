@@ -34,6 +34,10 @@ public class RestfullApplication implements WebMvcConfigurer{
 		.allowedMethods("*")
 		.allowedOrigins("*");
 		
+		registry.addMapping("/recuperaconta")
+		.allowedMethods("*")
+		.allowedOrigins("*");
+		
 		/*
 		 
 			registry.addMapping("/usuario")
