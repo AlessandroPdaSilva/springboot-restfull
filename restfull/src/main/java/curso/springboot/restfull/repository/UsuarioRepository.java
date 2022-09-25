@@ -28,6 +28,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
 	@Modifying
 	@Transactional
+	@Query(nativeQuery = true, value = "UPDATE usuario SET senha = ?1 WHERE id = ?2")
+	public void updateSenha(String senha, Long idUsuario);
+	
+	@Modifying
+	@Transactional
 	@Query(nativeQuery = true, value = "UPDATE usuario SET token = ?1 WHERE login = ?2")
 	public void atualizaToken(String login,String token);
 
