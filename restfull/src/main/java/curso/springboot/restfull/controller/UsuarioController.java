@@ -3,8 +3,10 @@ package curso.springboot.restfull.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -33,6 +35,7 @@ import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.model.UsuarioDto;
 import curso.springboot.restfull.repository.TelefoneRepository;
 import curso.springboot.restfull.repository.UsuarioRepository;
+import curso.springboot.restfull.service.RelatorioService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,6 +47,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private TelefoneRepository telefoneRepository;
+	
+	@Autowired
+	private RelatorioService relatorioService;
 
 	// LISTAR USUARIOS
 	@GetMapping(value = "")
@@ -206,7 +212,16 @@ public class UsuarioController {
 	}
  	
  	
- 	
+ 	// DOWNLOAD RELATORIO
+ 	@GetMapping(value = "/relatorio", produces = "application/text")
+ 	public ResponseEntity<String> downloadRelatorio(HttpServletRequest request) throws Exception{
+ 		
+ 		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario", request.getServletContext());
+ 		
+ 		String base64Pdf = "data:application/pdf;base64,"+ Base64.encodeBase64String(pdf);
+ 		
+ 		return new ResponseEntity<String>(base64Pdf,HttpStatus.OK);
+ 	}
  	
  	
  	/***
