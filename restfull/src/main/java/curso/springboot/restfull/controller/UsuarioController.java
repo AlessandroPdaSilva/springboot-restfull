@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.restfull.model.Telefone;
 import curso.springboot.restfull.model.Usuario;
 import curso.springboot.restfull.model.UsuarioDto;
+import curso.springboot.restfull.model.UsuarioRelatorio;
 import curso.springboot.restfull.repository.TelefoneRepository;
 import curso.springboot.restfull.repository.UsuarioRepository;
 import curso.springboot.restfull.service.RelatorioService;
@@ -222,6 +223,18 @@ public class UsuarioController {
  		
  		return new ResponseEntity<String>(base64Pdf,HttpStatus.OK);
  	}
+ 	
+ 	
+ 	// DOWNLOAD RELATORIO PARAM
+  	@PostMapping(value = "/relatorio/", produces = "application/text")
+  	public ResponseEntity<String> downloadRelatorioParam(HttpServletRequest request, @RequestBody UsuarioRelatorio usuarioRelatorio) throws Exception{
+  		
+  		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario", request.getServletContext());
+  		
+  		String base64Pdf = "data:application/pdf;base64,"+ Base64.encodeBase64String(pdf);
+  		
+  		return new ResponseEntity<String>(base64Pdf,HttpStatus.OK);
+  	}
  	
  	
  	/***
