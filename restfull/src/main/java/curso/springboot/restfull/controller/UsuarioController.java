@@ -1,7 +1,10 @@
 package curso.springboot.restfull.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -217,7 +220,7 @@ public class UsuarioController {
  	@GetMapping(value = "/relatorio", produces = "application/text")
  	public ResponseEntity<String> downloadRelatorio(HttpServletRequest request) throws Exception{
  		
- 		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario", request.getServletContext());
+ 		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario", new HashMap(), request.getServletContext());
  		
  		String base64Pdf = "data:application/pdf;base64,"+ Base64.encodeBase64String(pdf);
  		
@@ -229,7 +232,18 @@ public class UsuarioController {
   	@PostMapping(value = "/relatorio/", produces = "application/text")
   	public ResponseEntity<String> downloadRelatorioParam(HttpServletRequest request, @RequestBody UsuarioRelatorio usuarioRelatorio) throws Exception{
   		
-  		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario", request.getServletContext());
+  		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+  		SimpleDateFormat formatDatabase = new SimpleDateFormat("yyyy-MM-dd");
+  		
+  		String dataInicio = formatDatabase.format(format.parse(usuarioRelatorio.getDataInicial()));
+  		String dataFinal = formatDatabase.format(format.parse(usuarioRelatorio.getDataFinal()));
+  		
+  		HashMap<String,Object> params = new HashMap<String, Object>();
+  		
+  		params.put("DATA_INICIO", dataInicio);
+  		params.put("DATA_FIM", dataFinal);
+  		
+  		byte[] pdf = relatorioService.gerarRelatorio("relatorio-usuario-param", params, request.getServletContext());
   		
   		String base64Pdf = "data:application/pdf;base64,"+ Base64.encodeBase64String(pdf);
   		
